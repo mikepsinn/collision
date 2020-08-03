@@ -81,6 +81,10 @@ class ExceptionHandler implements ExceptionHandlerContract
                 ->getHandler()
                 ->setOutput($output);
 
+            if ($e instanceof ExceptionWrapper && $e->getOriginalException() !== null) {
+                $e = $e->getOriginalException();
+            }
+
             $handler->setInspector((new Inspector($e)));
 
             $handler->handle();

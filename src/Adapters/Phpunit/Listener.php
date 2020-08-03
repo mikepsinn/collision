@@ -62,6 +62,10 @@ if (class_exists(\PHPUnit\Runner\Version::class) && intval(substr(\PHPUnit\Runne
          */
         public function render(\Throwable $t)
         {
+            if ($t instanceof ExceptionWrapper && $t->getOriginalException() !== null) {
+                $t = $t->getOriginalException();
+            }
+
             $inspector = new Inspector($t);
 
             $this->writer->write($inspector);
